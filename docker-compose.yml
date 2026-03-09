@@ -20,5 +20,17 @@ services:
       - "15672:15672" # Management UI port
     restart: unless-stopped
 
+  service_a:
+    build: ./service_a
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      - db
+      - rabbitmq
+    restart: unless-stopped
+
 volumes:
   pgdata:
