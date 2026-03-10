@@ -1,9 +1,10 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
+from enum import Enum
 
 
 class UserRegistration(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     password: str
 
 
@@ -17,3 +18,9 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class AssetStatus(str, Enum):
+    active = "active"
+    inactive = "inactive"
+    maintenance = "maintenance"
