@@ -11,4 +11,4 @@ class Settings(BaseSettings):
     secret_key: str
 
 
-settings = Settings()
+settings = Settings()  # type: ignore
