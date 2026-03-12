@@ -15,12 +15,12 @@ class User(Base):
 class Asset(Base):
     __tablename__ = "assets"
     id = Column(Integer, primary_key=True)
+    owner_id = Column(Integer, ForeignKey("users.id"))
     name = Column(String, nullable=False)
     asset_type = Column(String, nullable=False)  # equipment | personnel | resource
     status = Column(String, default="active")  # active | inactive | maintenance
-    location = Column(String)
+    location = Column(String, nullable=False)
     asset_metadata = Column(JSON)  # flexible field for extra details
-    owner_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, onupdate=lambda: datetime.now(timezone.utc))
 
