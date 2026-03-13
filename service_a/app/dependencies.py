@@ -28,7 +28,7 @@ async def get_current_user(
         token_data = TokenData(user_id=user_id)
     except (InvalidTokenError, ValueError):
         raise credentials_exception
-    user = db.query(User).filter(User.id == token_data.user_id).first()
+    user = db.get(User, token_data.user_id)
     if user is None:
         raise credentials_exception
     return user
