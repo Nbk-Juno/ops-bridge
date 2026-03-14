@@ -25,7 +25,7 @@ async def create(
     db.commit()
     db.refresh(new_asset)
 
-    publish_event("asset.created", AssetResponse.model_validate(new_asset).model_dump())
+    publish_event("asset.created", AssetResponse.model_validate(new_asset).model_dump(mode="json"))
 
     return new_asset
 
@@ -69,7 +69,7 @@ async def update_asset(
     db.commit()
     db.refresh(asset)
 
-    publish_event("asset.updated", AssetResponse.model_validate(asset).model_dump())
+    publish_event("asset.updated", AssetResponse.model_validate(asset).model_dump(mode="json"))
 
     return asset
 
@@ -85,7 +85,7 @@ async def delete_asset(
         raise HTTPException(status_code=404, detail="Asset not found")
 
     name = asset.name
-    payload = AssetResponse.model_validate(asset).model_dump()
+    payload = AssetResponse.model_validate(asset).model_dump(mode="json")
 
     db.delete(asset)
     db.commit()
