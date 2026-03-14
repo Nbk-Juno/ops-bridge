@@ -65,3 +65,13 @@ class AssetResponse(BaseModel):
     updated_at: datetime | None = None
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class AuditLogResponse(BaseModel):
+    id: int
+    asset_id: int
+    event_type: str
+    payload: dict
+    timestamp: datetime
+
+    model_config = ConfigDict(from_attributes=True)

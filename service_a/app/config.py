@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     )
 
     database_url: str
+    rabbitmq_url: str
     secret_key: str
 
 

@@ -21,6 +21,11 @@ def setup_database():
     Base.metadata.drop_all(bind=engine)
 
 
+@pytest.fixture()
+def db_engine():
+    return engine
+
+
 @pytest.fixture(autouse=True)
 def clean_tables():
     yield
