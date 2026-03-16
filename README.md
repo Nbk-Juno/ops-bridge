@@ -29,12 +29,9 @@ OpsBridge is a two-service microservices backend for managing operational assets
 
 ## Motivation
 
-In any operational context — logistics, field ops, infrastructure management — knowing *what changed* is just as important as knowing *what the current state is*. A standard CRUD API tells you an asset is "inactive", but it can't tell you when that happened, what triggered it, or what came before.
+At my previous employer, our fulfillment pipelines integrated with freight forwarders and third-party logistics software—most of it decades old. When shipments went missing or orders had wrong info, tracking down what changed and when was nearly impossible because their audit trails were incomplete or nonexistent.
 
-Most solutions bolt logging onto the API layer: a decorator here, a middleware there. It works until it doesn't — missed callsites, tight coupling, and a logging failure that takes down your write path.
-
-OpsBridge takes a different approach. `service_a` does one thing: manage assets. The moment an asset is created, updated, or deleted, it fires an event into RabbitMQ and moves on. `service_b` picks up that event asynchronously and writes the audit record independently. The two concerns never touch. The audit trail is automatic, decoupled, and survives failures on either side.
-
+I saw the event-driven microservices pattern in job descriptions and wanted to learn it properly, so I built OpsBridge: one FastAPI service handles asset updates while another asynchronously logs every change via RabbitMQ. The challenge was true decoupling. The main API stays fast even if the logger is down, and queued events survive restarts. Used PostgreSQL for both services, wrote tests to 80%+ coverage for the async flows, and containerized everything with Docker Compose.
 ---
 
 ## 🚀 Quick Start
